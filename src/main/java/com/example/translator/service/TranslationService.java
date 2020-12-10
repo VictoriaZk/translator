@@ -30,15 +30,22 @@ public class TranslationService {
                 if(englishWord.isPresent()){
                     return TranslatedWord.builder()
                             .word(englishWord.get().getRussianWord())
+                            .englishWord(word)
                             .way(TranslateWay.DATA_BASE)
                             .build();
                 }else {
-                    Translation translation = translate.translate(word);
+                    try {
+                        Translation translation = translate.translate(word);
+                        return TranslatedWord.builder()
+                                .word(translation.getTranslatedText())
+                                .englishWord(word)
+                                .way(TranslateWay.CLOUD)
+                                .build();
+                    }catch (Exception ex){
+                        ex.getCause();
+                    }
+                    return null;
 
-                    return TranslatedWord.builder()
-                            .word(translation.getTranslatedText())
-                            .way(TranslateWay.CLOUD)
-                            .build();
                 }
             }).collect(Collectors.toList());
         }).collect(Collectors.toList());

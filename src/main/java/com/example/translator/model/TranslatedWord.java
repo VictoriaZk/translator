@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TranslatedWord {
+    private String englishWord;
     private String word;
     private TranslateWay way;
 }

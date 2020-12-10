@@ -1,17 +1,17 @@
 package com.example.translator.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 
+@Data
 @Entity
 public class WordTranslate {
 

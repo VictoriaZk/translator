@@ -18,15 +18,19 @@ public class MainController {
     private final TranslationService translateService;
     private final WordService wordService;
 
-    @GetMapping
-    public String getTranslate(Model model){
-//        String text = "Meet my family. There are five of us – my parents, my elder brother, my baby sister and me. First, meet my mum and dad, Jane and Michael. My mum enjoys reading and my dad enjoys playing chess with my brother Ken. My mum is slim and rather tall. She has long red hair and big brown eyes. She has a very pleasant smile and a soft voice. My mother is very kind and understanding.";
-//        ShowTranslateResponse translate = translateService.getTranslate(text);
-//        model.addAttribute("translate", translate);
+    @PostMapping
+    public String getTranslate(@RequestParam(name = "inputText") String text,  Model model){
+        ShowTranslateResponse translate = translateService.getTranslate(text);
+        model.addAttribute("translate", translate);
         return "start" ;
     }
 
-    @PostMapping
+    @GetMapping
+    public String initPage(){
+        return "start";
+    }
+
+    @PostMapping("/words")
     public void setWord(@RequestParam(name = "words") MultipartFile file) throws IOException {
         wordService.uploadWords(file);
 
