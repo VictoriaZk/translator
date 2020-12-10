@@ -6,8 +6,17 @@
 <body>
 
 <div class="container" style="margin-left: 200px">
-    <div>
-        ${translate.translatedText}
+    <#if translate??>
+        <div>
+            ${translate.translatedText}
+        </div>
+    </#if>
+
+    <div style="padding-left: 100px; padding-top: 50px">
+        <form action="/translator" method="post" enctype="multipart/form-data">
+            <input type="file" name="words" id="words">
+            <button type="submit">Add to dataBase</button>
+        </form>
     </div>
 </div>
 </body>

@@ -12,12 +12,7 @@ import com.google.cloud.translate.Translation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +34,7 @@ public class TranslationService {
                             .build();
                 }else {
                     Translation translation = translate.translate(word);
+
                     return TranslatedWord.builder()
                             .word(translation.getTranslatedText())
                             .way(TranslateWay.CLOUD)
@@ -47,8 +43,20 @@ public class TranslationService {
             }).collect(Collectors.toList());
         }).collect(Collectors.toList());
 
+        List<TranslatedWord> sortWords = getSortWords(translatedSentences);
+
+        List<TranslatedWord> translatedByDataBase = sortWords.stream()
+                .filter(word -> word.getWay().equals(TranslateWay.DATA_BASE))
+                .collect(Collectors.toList());
+
+        List<TranslatedWord> translatedByCloud = sortWords.stream()
+                .filter(word -> word.getWay().equals(TranslateWay.CLOUD))
+                .collect(Collectors.toList());
+
         return ShowTranslateResponse.builder()
                 .translatedText(collectText(translatedSentences))
+                .wordsDB(translatedByDataBase)
+                .wordsCloud(translatedByCloud)
                 .build();
     }
 
@@ -72,6 +80,10 @@ public class TranslationService {
                 wordsFrequency.put(word, 1);
             }
         });
+        return wordsFrequency.entrySet().stream()
+                .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
 }

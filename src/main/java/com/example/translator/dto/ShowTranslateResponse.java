@@ -1,5 +1,6 @@
 package com.example.translator.dto;
 
+import com.example.translator.model.TranslatedWord;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,8 +20,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShowTranslateResponse {
     private String translatedText;
-    private List<String> wordsDB;
-    private List<String> wordsCloud;
-
-
+    private List<TranslatedWord> wordsDB;
+    private List<TranslatedWord> wordsCloud;
 }

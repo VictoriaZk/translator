@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TranslatorConfiguration {
     @Bean
-    Translate Translate(){
+    Translate translate(){
         return TranslateOptions.newBuilder().setTargetLanguage("ru").build().getService();
     }
 }
